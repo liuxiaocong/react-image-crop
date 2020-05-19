@@ -1,0 +1,140 @@
+body {
+  font-family: Helvetica, Verdana, sans-serif;
+  line-height: 1.5em;
+  height: 100%;
+}
+
+#debugContainer {
+  padding: 1em;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.container .left {
+  width: 600px;
+  flex-shrink: 0;
+}
+
+.container .right {
+  flex-grow: 1;
+}
+
+#imageContainer {
+  height: 600px;
+  position: relative;
+  overflow: hidden;
+}
+
+#imageContainer img {
+  width: 100%;
+}
+
+#imageContainer .mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#imageContainer .canvas {
+  position: absolute;
+  left: 50%;
+  margin-left: -225px;
+  top: 50%;
+  margin-top: -150px;
+}
+
+#imageContainer .backgroundImage {
+  z-index: -2;
+  position: absolute;
+}
+
+.topWrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.sizeControlWrap {
+  width: 340px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.sizeControlWrap .label {
+  display: inline-block;
+  width: 20px;
+  line-height: 20px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.sizeControlWrap .controlBarWrap {
+  flex-grow: 1;
+  background: #DDD;
+  border-radius: 8px;
+  line-height: 16px;
+  height: 16px;
+  position: relative;
+}
+
+.sizeControlWrap .controlBarWrap .controller {
+  position: absolute;
+  display: inline-block;
+  height: 20px;
+  width: 10px;
+  left: 0;
+  top: 0;
+  background: red;
+  margin-top: -2px;
+}
+
+.sizeControlWrap .controlBarWrap .controlProgress {
+  background: #108ee9;
+  height: 16px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  width: 0;
+}
+
+.fileWrap {
+  display: inline-block;
+  position: relative;
+  padding: 0 10px;
+}
+
+.fileWrap .fileName {
+  font-size: 11px;
+  margin: 0 5px;
+  color: #333;
+}
+
+.fileSelector {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+}
+
+.actionsWrap button {
+  margin: 10px 20px;
+}
+
+.actionsWrap #loadPrevious {
+  display: none;
+}
+
+#debugContainer p {
+  margin: 0;
+  padding: 0;
+}
