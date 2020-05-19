@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Albumprinter test application</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1"/>
+    <link rel="stylesheet" href="./app/css/styles.css" media="all"/>
+  </head>
+  <body>
+    <h1>Test application</h1>
+    <p>
+      Your application is ready. There should be a message in your browsers
+      console indicating the JavaScript application has loaded.
+    </p>
+    <form action="#">
+      <fieldset>
+        <div class="topWrap">
+          <label for="fileSelector">Select an Image file</label>
+          <span class="fileWrap">
+            <input type="file" id="fileSelector" class="fileSelector"/>
+            <button>choose File</button>
+            <span id="fileName" class="fileName">No File Chosen</span>
+          </span>
+          <span>Size control:</span>
+          <div class="sizeControlWrap">
+            <span class="label">-</span>
+            <div class="controlBarWrap" id="sizeControllerWrap">
+              <div class="controlProgress" id="sizeControlProgress"></div>
+              <span class="controller" id="sizeController"></span>
+            </div>
+            <span class="label">+</span>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+    <div class="container">
+      <div class="left">
+        <div id="imageContainer">
+          <!-- will hold photos -->
+          <img id="backgroundImage" class="backgroundImage"/>
+          <div class="mask"></div>
+          <canvas id="canvas" class="canvas" width="450" height="300"/>
+        </div>
+      </div>
+      <div class="right">
+        <div class="actionsWrap">
+          <button id="generateButton">Generate!</button>
+          <button id="loadPrevious">loads a previous!</button>
+        </div>
+        <div id="debugContainer">
+          <!-- will hold debug messages -->
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="./app/js/main.js"></script>
+  </body>
+</html>
