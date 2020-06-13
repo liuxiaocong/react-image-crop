@@ -1,7 +1,8 @@
 {
   "name": "react-crop-img",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
+  "keywords": "react image-crop crop react-image",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
