@@ -86,7 +86,6 @@ const photoEditor = (
     },
 
     initSizeControl: function() {
-      console.log('initSizeControl');
       if (currentBackgroundImageInfo.orginalHeight / canvasHeight >
         currentBackgroundImageInfo.orginalWidth / canvasWidth) {
         minScaleTimes = 1 / (currentBackgroundImageInfo.orginalWidth / canvasWidth);
@@ -95,8 +94,8 @@ const photoEditor = (
       }
       sizeControlStep = (maxScaleTimes + minScaleTimes) / 300;
       initSizeControlPosition = ((1 - minScaleTimes) / sizeControlStep);
-      console.log(sizeControlStep);
-      console.log(initSizeControlPosition);
+      //console.log(sizeControlStep);
+      //console.log(initSizeControlPosition);
       sizeController.style.left = initSizeControlPosition + 'px';
       sizeControlProgress.style.width = (initSizeControlPosition / 300) * 100 + '%';
 
@@ -154,7 +153,7 @@ const photoEditor = (
     },
 
     initBackgroundImageSizeAndPosition: function() {
-      console.log(isLandscape);
+      //console.log(isLandscape);
       if (isLandscape) {
         const width = imageWidth / imageHeight * containerWidth;
         currentBackgroundImageInfo.orginalWidth = width;
@@ -243,7 +242,7 @@ const photoEditor = (
     },
 
     showDescription: function() {
-      console.log(currentBackgroundImageInfo);
+      //console.log(currentBackgroundImageInfo);
       const backgroundImageInfoToInch = this.convertBackgroundImageInfoToInch();
       const lastDescription = {
         'canvas': {
@@ -272,8 +271,8 @@ const photoEditor = (
       localStorage.setItem(lastDescriptionKey, JSON.stringify(lastDescription));
       localStorage.setItem(lastActionInfoKey, JSON.stringify(lastActionInfo));
 
-      alert(JSON.stringify(lastDescription));
-      return JSON.stringify(lastDescription);
+      //alert(JSON.stringify(lastDescription));
+      return lastDescription;
     },
 
     restoreLastDescription: function() {
@@ -290,10 +289,10 @@ const photoEditor = (
           imageHeight = image.naturalHeight;
           isLandscape = imageWidth > imageHeight;
           that.start();
-          console.log(description);
+          //console.log(description);
           const photo = description.lastDescription.canvas.photo;
           const backgroundInfoInPx = that.convertInchToBackgroundImageInfo(photo.width, photo.height, photo.x, photo.y);
-          console.log(backgroundInfoInPx);
+          //console.log(backgroundInfoInPx);
           that.updateBackgroundImageSizeAndPosition(backgroundInfoInPx.x, backgroundInfoInPx.y,
             backgroundInfoInPx.width,
             backgroundInfoInPx.height);

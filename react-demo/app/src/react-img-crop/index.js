@@ -3,7 +3,7 @@ const { lastDescriptionKey, lastActionInfoKey } = require('./constant');
 
 const reactImgCrop = (function() {
   let imageContainer, debugContainer, generateButton, loadPreviousButton, backgroundImage,
-      canvas, sizeControllerWrap, sizeController, sizeControlProgress, fileNameDom, fileSelector, editor;
+      canvas, sizeControllerWrap, sizeController, sizeControlProgress, fileNameDom, fileSelector, editor, onCrop;
   const log = (msg)=>{
     debugContainer.innerHTML += '<p>' + msg + '</p>';
   };
@@ -20,6 +20,7 @@ const reactImgCrop = (function() {
       sizeControlProgress = config.sizeControlProgress;
       fileNameDom = config.fileNameDom;
       fileSelector = config.fileSelector;
+      onCrop = config.onCrop;
     },
 
     start: ()=>{
@@ -39,8 +40,8 @@ const reactImgCrop = (function() {
               reader.onload = function(e) {
                 // create HTMLImageElement holding image data
                 var img = new Image();
-                console.log(file);
-                console.log(reader);
+                //console.log(file);
+                //console.log(reader);
                 img.src = reader.result;
 
                 img.onload = function() {
@@ -72,6 +73,9 @@ const reactImgCrop = (function() {
         log('GENERATE BUTTON CLICKED!! Should this do something else?');
         if (editor) {
           log(editor.showDescription());
+        }
+        if(onCrop && typeof onCrop === 'function'){
+          onCrop(editor.showDescription())
         }
       };
 

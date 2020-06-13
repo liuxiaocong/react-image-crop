@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import reactImgCrop from './react-img-crop';
 import './App.css';
 
 function App() {
-  useEffect(()=>{
+  useEffect(() => {
     const imageContainer = document.getElementById('imageContainer');
     const debugContainer = document.getElementById('debugContainer');
     const generateButton = document.getElementById('generateButton');
@@ -15,6 +15,7 @@ function App() {
     const sizeControlProgress = document.getElementById('sizeControlProgress');
     const fileNameDom = document.getElementById('fileName');
     const fileSelector = document.getElementById('fileSelector');
+
     const config = {
       imageContainer,
       generateButton,
@@ -27,10 +28,29 @@ function App() {
       fileNameDom,
       fileSelector,
       debugContainer,
-    }
+      onCrop: (info) => {
+        console.log(info);
+        const img = canvas.toDataURL('image/png');
+        document.getElementById('result').src = img;
+
+
+        var link = document.createElement('a');
+        link.download = 'name';
+        link.href = img;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        //console.log(img);
+        //window.image = resultImage.current;
+        //console.log(resultImage.current === document.getElementById('result'));
+        //resultImage.current.src = `${ img }`;
+      },
+    };
     reactImgCrop.init(config);
     reactImgCrop.start();
-  },[])
+  }, []);
+
   return (
     <div className="App">
       <p>
@@ -72,6 +92,7 @@ function App() {
             <button id="loadPrevious">loads a previous!</button>
           </div>
           <div id="debugContainer">
+            <img src='' id='result'/>
           </div>
         </div>
       </div>
