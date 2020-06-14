@@ -5,7 +5,9 @@ const reactImgCrop = (function() {
   let imageContainer, debugContainer, generateButton, loadPreviousButton, backgroundImage,
       canvas, sizeControllerWrap, sizeController, sizeControlProgress, fileNameDom, fileSelector, editor, onCrop;
   const log = (msg)=>{
-    debugContainer.innerHTML += '<p>' + msg + '</p>';
+    if(debugContainer){
+      debugContainer.innerHTML += '<p>' + msg + '</p>';
+    }
   };
   return {
     init:(config)=>{
@@ -72,7 +74,7 @@ const reactImgCrop = (function() {
       generateButton.onclick = function(e) {
         log('GENERATE BUTTON CLICKED!! Should this do something else?');
         if (editor) {
-          log(editor.showDescription());
+          log(JSON.stringify(editor.showDescription()));
         }
         if(onCrop && typeof onCrop === 'function'){
           onCrop(editor.showDescription())
