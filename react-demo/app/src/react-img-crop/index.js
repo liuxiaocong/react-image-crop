@@ -108,6 +108,10 @@ const reactImgCrop = (function() {
           };
         }
       };
+    },
+
+    sizeSize:(percent = 1)=>{
+
     }
   }
 })();

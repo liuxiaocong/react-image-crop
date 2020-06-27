@@ -10,17 +10,18 @@ const photoEditor = (
   loadPreviousButton,
   fileNameDom,
   initReaderResult,
-  fileName,) => {
+  fileName) => {
   const inchToPx = 96;
   const targetWidth = inchToPx * 15; // inches
   const context = canvas.getContext('2d');
-  const containerWidth = 600;
-  const containerHeight = 600;
-  const canvasWidth = 450;
-  const canvasHeight = 300;
+  const containerStyle = getComputedStyle(imageContainer, null);
+  const containerWidth = parseInt(containerStyle.width);
+  const containerHeight = parseInt(containerStyle.height);
+  const canvasWidth = canvas.width;
+  const canvasHeight = canvas.height;
   const covertRate = targetWidth / 450;
   const canvasLeftPadding = (containerWidth - 450) / 2;
-  const canvasTopPadding = (containerHeight - 300) / 2;
+  const canvasTopPadding = (containerHeight - canvasHeight) / 2;
   const imageContainerStartPosition = {};
   const sizeControllerStartPosition = {};
   const maxScaleTimes = 5;
@@ -44,7 +45,7 @@ const photoEditor = (
   let isLandscape = imageWidth > imageHeight;
   let minScaleTimes = 1;
   let initSizeControlPosition = 1;
-  let sizeControlStep = (maxScaleTimes + minScaleTimes - 1) / 300;
+  let sizeControlStep = (maxScaleTimes + minScaleTimes - 1) / canvasHeight;
   let currentBackgroundImageInfo = {};
   let isSizeControllerDragging = false;
   let isDragging = false;
@@ -86,18 +87,21 @@ const photoEditor = (
     },
 
     initSizeControl: function() {
+      if (!sizeController) {
+        return;
+      }
       if (currentBackgroundImageInfo.orginalHeight / canvasHeight >
         currentBackgroundImageInfo.orginalWidth / canvasWidth) {
         minScaleTimes = 1 / (currentBackgroundImageInfo.orginalWidth / canvasWidth);
       } else {
         minScaleTimes = 1 / (currentBackgroundImageInfo.orginalHeight / canvasHeight);
       }
-      sizeControlStep = (maxScaleTimes + minScaleTimes) / 300;
+      sizeControlStep = (maxScaleTimes + minScaleTimes) / canvasHeight;
       initSizeControlPosition = ((1 - minScaleTimes) / sizeControlStep);
       //console.log(sizeControlStep);
       //console.log(initSizeControlPosition);
       sizeController.style.left = initSizeControlPosition + 'px';
-      sizeControlProgress.style.width = (initSizeControlPosition / 300) * 100 + '%';
+      sizeControlProgress.style.width = (initSizeControlPosition / canvasHeight) * 100 + '%';
 
       sizeControllerWrap.addEventListener('mousedown', (e) => {
         isSizeControllerDragging = true;
@@ -117,11 +121,11 @@ const photoEditor = (
         if (finalX < 0) {
           finalX = 0;
         }
-        if (finalX > 300) {
-          finalX = 300;
+        if (finalX > canvasHeight) {
+          finalX = canvasHeight;
         }
         sizeController.style.left = finalX + 'px';
-        sizeControlProgress.style.width = (finalX / 300) * 100 + '%';
+        sizeControlProgress.style.width = (finalX / canvasHeight) * 100 + '%';
         this.updateImageSizeWithControl(finalX);
       });
     },
@@ -260,9 +264,11 @@ const photoEditor = (
       const lastActionInfo = {
         imageData: readerResult,
         imageName: fileName,
-        sizeControllerLeft: sizeController.style.left,
-        sizeControlProgressWidth: sizeControlProgress.style.width,
       };
+      if (sizeController) {
+        lastActionInfo.sizeControllerLeft = sizeController.style.left;
+        lastActionInfo.sizeControlProgressWidth = sizeControlProgress.style.width;
+      }
 
       description.lastDescription = lastDescription;
       description.lastActionInfo = lastActionInfo;
@@ -296,10 +302,36 @@ const photoEditor = (
           that.updateBackgroundImageSizeAndPosition(backgroundInfoInPx.x, backgroundInfoInPx.y,
             backgroundInfoInPx.width,
             backgroundInfoInPx.height);
-          sizeController.style.left = description.lastActionInfo.sizeControllerLeft;
-          sizeControlProgress.style.width = description.lastActionInfo.sizeControlProgressWidth;
+          if (sizeController) {
+            sizeController.style.left = description.lastActionInfo.sizeControllerLeft;
+            sizeControlProgress.style.width = description.lastActionInfo.sizeControlProgressWidth;
+          }
         };
       }
+    },
+    updatePercent: function(percent = 1) {
+      let scale = percent;
+      if (scale < minScaleTimes) {
+        scale = minScaleTimes;
+      }
+      if (scale > maxScaleTimes) {
+        scale = maxScaleTimes;
+      }
+      let width = currentBackgroundImageInfo.orginalWidth * scale;
+      let height = currentBackgroundImageInfo.orginalHeight * scale;
+      if (width < canvasWidth) {
+        width = canvasWidth;
+        height = currentBackgroundImageInfo.orginalHeight / currentBackgroundImageInfo.orginalWidth * width;
+      }
+      if (height < canvasHeight) {
+        height = canvasHeight;
+        width = currentBackgroundImageInfo.orginalWidth / currentBackgroundImageInfo.orginalHeight * height;
+      }
+      const xNeedMove = (width - currentBackgroundImageInfo.width) / 2;
+      const yNeedMove = (height - currentBackgroundImageInfo.height) / 2;
+      const x = currentBackgroundImageInfo.x - xNeedMove;
+      const y = currentBackgroundImageInfo.y - yNeedMove;
+      this.updateBackgroundImageSizeAndPosition(x, y, width, height);
     },
   };
   return ret;
