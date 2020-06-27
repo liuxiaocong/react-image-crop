@@ -58,4 +58,5 @@ const imageContainer = document.getElementById('imageContainer');
 
 <img src="https://raw.githubusercontent.com/liuxiaocong/react-image-crop/master/react-demo/app/screenshot/1.jpeg" width="90%">
 
+##### User can define crop size by set canvas width and height: <canvas id="canvas" className="canvas" width="450" height="200"/>
 ##### What's next? Optimize sizeController, give more custom action to user

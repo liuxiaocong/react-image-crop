@@ -83,7 +83,7 @@ function App() {
           <div id="imageContainer">
             <img id="backgroundImage" className="backgroundImage"/>
             <div className="mask"></div>
-            <canvas id="canvas" className="canvas" width="450" height="300"/>
+            <canvas id="canvas" className="canvas" width="450" height="200"/>
           </div>
         </div>
         <div className="right">

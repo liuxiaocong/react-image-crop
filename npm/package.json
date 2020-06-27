@@ -1,12 +1,12 @@
 {
   "name": "react-crop-img",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
-  "keywords": "react image-crop crop react-image",
+  "keywords": "react image-crop crop react-image crop image canvuas crop",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "EvanLau",
   "license": "ISC"
 }
