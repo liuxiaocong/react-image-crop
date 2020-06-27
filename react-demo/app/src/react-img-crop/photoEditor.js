@@ -45,7 +45,8 @@ const photoEditor = (
   let isLandscape = imageWidth > imageHeight;
   let minScaleTimes = 1;
   let initSizeControlPosition = 1;
-  let sizeControlStep = (maxScaleTimes + minScaleTimes - 1) / canvasHeight;
+  let stepPoint = 300;
+  let sizeControlStep = (maxScaleTimes + minScaleTimes - 1) / stepPoint;
   let currentBackgroundImageInfo = {};
   let isSizeControllerDragging = false;
   let isDragging = false;
@@ -57,6 +58,7 @@ const photoEditor = (
       this.initBackgroundImageSizeAndPosition();
       this.initSizeControl();
       imageContainer.addEventListener('mousedown', (e) => {
+        console.log(currentBackgroundImageInfo);
         isDragging = true;
         imageContainerStartPosition.x = e.clientX;
         imageContainerStartPosition.y = e.clientY;
@@ -75,6 +77,16 @@ const photoEditor = (
         const moveY = e.clientY - imageContainerStartPosition.y;
         const imageX = imageContainerStartPosition.imageX;
         const imageY = imageContainerStartPosition.imageY;
+        console.log(">>>>>>>>>>>>>>>>>>>>>>");
+        console.log(e);
+        console.log("imageContainerStartPosition X:" + imageContainerStartPosition.x);
+        console.log("imageContainerStartPosition Y:" + imageContainerStartPosition.y);
+        console.log("moveX:" + moveX);
+        console.log("moveY:" + moveY);
+        console.log("imageX:" + imageX);
+        console.log("imageY:" + imageY);
+
+
         let finalX = imageX + moveX;
         let finalY = imageY + moveY;
         this.updateBackgroundImageSizeAndPosition(finalX, finalY,
@@ -96,12 +108,12 @@ const photoEditor = (
       } else {
         minScaleTimes = 1 / (currentBackgroundImageInfo.orginalHeight / canvasHeight);
       }
-      sizeControlStep = (maxScaleTimes + minScaleTimes) / canvasHeight;
+      sizeControlStep = (maxScaleTimes + minScaleTimes) / stepPoint;
       initSizeControlPosition = ((1 - minScaleTimes) / sizeControlStep);
       //console.log(sizeControlStep);
       //console.log(initSizeControlPosition);
       sizeController.style.left = initSizeControlPosition + 'px';
-      sizeControlProgress.style.width = (initSizeControlPosition / canvasHeight) * 100 + '%';
+      sizeControlProgress.style.width = (initSizeControlPosition / stepPoint) * 100 + '%';
 
       sizeControllerWrap.addEventListener('mousedown', (e) => {
         isSizeControllerDragging = true;
@@ -214,6 +226,10 @@ const photoEditor = (
       //  ', height=' + currentBackgroundImageInfo.height);
       //context.drawImage(image, x, y, currentBackgroundImageInfo.width,
       //  currentBackgroundImageInfo.height);
+      console.log("canvasLeftPadding:" + canvasLeftPadding);
+      console.log("canvasTopPadding:" + canvasTopPadding);
+      console.log("currentBackgroundImageInfo x" + currentBackgroundImageInfo.x);
+      console.log("currentBackgroundImageInfo y" + currentBackgroundImageInfo.y);
 
       context.drawImage(image, -x, -y, backgroundImage.width,
         backgroundImage.height);

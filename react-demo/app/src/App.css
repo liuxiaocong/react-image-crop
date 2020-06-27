@@ -46,9 +46,8 @@ body {
 #imageContainer .canvas {
   position: absolute;
   left: 50%;
-  margin-left: -225px;
   top: 50%;
-  margin-top: -150px;
+  transform: translateY(-50%) translateX(-50%);
 }
 
 #imageContainer .backgroundImage {
